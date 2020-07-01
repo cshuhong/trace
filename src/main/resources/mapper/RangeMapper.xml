@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zut.trace.mapper.RangeMapper">
+<sql id="rangeColumns">
+    select range_id,company_id,range_status
+</sql>
+
+    <insert id="addRange">
+INSERT INTO t_range(range_id,company_id,range_status)
+VALUES (#{range.rangeId},#{range.companyId},#{range.rangeStatus})
+    </insert>
+
+    <update id="updateRange">
+        update t_range
+        <set>
+            <if test="range.rangeId!=null and range.rangeId!='' ">range_id = #{range.rangeId},</if>
+            <if test="range.companyId!=null and range.companyId!='' ">company_id = #{range.companyId},</if>
+            <if test="range.rangeStatus!=null and range.rangeStatus!='' ">range_status = #{range.rangeStatus}</if>
+        </set>
+        where range_id = #{range.rangeId}
+    </update>
+    <delete id="deleteRange">
+        DELETE FROM t_range WHERE range_id = #{rangeId}
+    </delete>
+
+    <select id="queryAllRange" resultType="cn.edu.zut.trace.entity.po.Range">
+        <include refid="rangeColumns"/>
+        from t_range
+    </select>
+
+    <select id="queryRange" resultType="cn.edu.zut.trace.entity.po.Range">
+        <include refid="rangeColumns"/>
+        from t_range
+        <where>
+            <if test="range.rangeId!=null and range.rangeId!='' ">range_id = #{range.rangeId}</if>
+            <if test="range.companyId!=null and range.companyId!='' ">and company_id = #{range.companyId}</if>
+            <if test="range.rangeStatus!=null and range.rangeStatus!='' ">and range_status = #{range.rangeStatus}</if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zut.trace.mapper.AlarmMapper">
+    <sql id="alarmColumns">
+        select alarm_id, tag_id, user_id, alarm_information, alarm_location, alarm_date
+    </sql>
+
+    <insert id="addAlarm">
+INSERT INTO t_alarm(alarm_id,tag_id,user_id,alarm_information,alarm_location,alarm_date)
+VALUES (#{alarm.alarmId},#{alarm.tagId},#{alarm.userId},#{alarm.alarmInformation},#{alarm.alarmLocation},#{alarm.alarmDate})
+    </insert>
+
+    <update id="updateAlarm">
+        update t_alarm
+        <set>
+            <if test="alarm.tagId!=null and alarm.tagId!='' ">tag_id = #{alarm.tagId},</if>
+            <if test="alarm.userId!=null and alarm.userId!='' ">user_id = #{alarm.userId},</if>
+            <if test="alarm.alarmInformation!=null and alarm.alarmInformation!='' ">alarm_information = #{alarm.alarmInformation},</if>
+            <if test="alarm.alarmLocation!=null and alarm.alarmLocation!='' ">alarm_location = #{alarm.alarmLocation},</if>
+            <if test="alarm.alarmDate!=null and alarm.alarmDate!='' ">alarm_date = #{alarm.alarmDate}</if>
+        </set>
+        where alarm_id = #{alarm.alarmId}
+    </update>
+
+    <select id="queryCompanyAlarm" resultType="cn.edu.zut.trace.entity.vo.AlarmVo">
+        select alarm_id, t_alarm.tag_id, user_id, alarm_information, alarm_location, alarm_date
+        from t_alarm, t_tag
+        where t_alarm.tag_id = t_tag.tag_id and t_tag.company_id = #{companyId}
+    </select>
+
+    <select id="queryAllAlarm" resultType="cn.edu.zut.trace.entity.vo.AlarmVo">
+        <include refid="alarmColumns"/>
+        from t_alarm
+    </select>
+
+    <select id="queryAlarm" resultType="cn.edu.zut.trace.entity.vo.AlarmVo">
+        <include refid="alarmColumns"/>
+        from t_alarm
+        <where>
+            <if test="alarm.alarmId!=null and alarm.alarmId!='' ">alarm_id = #{alarm.alarmId}</if>
+            <if test="alarm.tagId!=null and alarm.tagId!='' ">and tag_id = #{alarm.tagId}</if>
+            <if test="alarm.userId!=null and alarm.userId!='' ">user_id = #{alarm.userId}</if>
+            <if test="alarm.alarmInformation!=null and alarm.alarmInformation!='' ">and alarm_information = #{alarm.alarmInformation}</if>
+            <if test="alarm.alarmLocation!=null and alarm.alarmLocation!='' ">alarm_location = #{alarm.alarmLocation}</if>
+            <if test="alarm.alarmDate!=null and alarm.alarmDate!='' ">and alarm_date = #{alarm.alarmDate}</if>
+        </where>
+    </select>
+
+</mapper>

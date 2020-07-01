@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zut.trace.mapper.ProductMapper">
+<sql id="productColumns">
+    select product_id
+,tag_id
+,manufacturer_id
+,product_name
+,product_introduce
+,product_date
+,product_batch
+,product_period
+,transporter_id
+,product_tdate
+,hospital_id
+,product_hdate
+,product_status
+</sql>
+    <insert id="addProduct">
+INSERT INTO t_product(tag_id,manufacturer_id,product_name,product_introduce,product_date,product_batch,product_period,product_status)
+VALUES (#{product.tagId},#{product.manufacturerId},#{product.productName},#{product.productIntroduce},#{product.productDate},#{product.productBatch},#{product.productPeriod},#{product.productStatus})
+    </insert>
+
+    <delete id="deleteProduct">
+        DELETE FROM t_product WHERE product_id = #{productId}
+    </delete>
+
+    <select id="queryProduct" resultType="cn.edu.zut.trace.entity.vo.ProductVo">
+        <include refid="productColumns"/>
+        from t_product
+        <where>
+            <if test="product.productId!=null and product.productId!='' ">product_id = #{product.productId}</if>
+            <if test="product.tagId!=null and product.tagId!='' ">and tag_id = #{product.tagId}</if>
+            <if test="product.manufacturerId!=null and product.manufacturerId!='' ">and manufacturer_id = #{product.manufacturerId}</if>
+            <if test="product.productName!=null and product.productName!='' ">and product_name = #{product.productName}</if>
+            <if test="product.productDate!=null and product.productDate!='' ">and product_date = #{product.productDate}</if>
+            <if test="product.productBatch!=null and product.productBatch!='' ">and product_batch = #{product.productBatch}</if>
+            <if test="product.transporterId!=null and product.transporterId!='' ">and transporter_id = #{product.transporterId}</if>
+            <if test="product.hospitalId!=null and product.hospitalId!='' ">and hospital_id = #{product.hospitalId}</if>
+            <if test="product.productStatus!=null and product.productStatus!='' ">and product_status = #{product.productStatus}</if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultType="cn.edu.zut.trace.entity.vo.ProductVo">
+        <include refid="productColumns"/>
+        from t_product
+    </select>
+
+    <update id="updateProduct">
+        update t_product
+        <set>
+            <if test="product.tagId!=null and product.tagId!='' ">tag_id = #{product.tagId},</if>
+            <if test="product.manufacturerId!=null and product.manufacturerId!='' ">manufacturer_id = #{product.manufacturerId},</if>
+            <if test="product.productName!=null and product.productName!='' ">product_name = #{product.productName},</if>
+            <if test="product.productIntroduce!=null and product.productIntroduce!='' ">product_introduce = #{product.productIntroduce},</if>
+            <if test="product.productDate!=null and product.productDate!='' ">product_date = #{product.productDate},</if>
+            <if test="product.productBatch!=null and product.productBatch!='' ">product_batch = #{product.productBatch},</if>
+            <if test="product.productPeriod!=null and product.productPeriod!='' ">product_period = #{product.productPeriod},</if>
+            <if test="product.transporterId!=null and product.transporterId!='' ">transporter_id = #{product.transporterId},</if>
+            <if test="product.productTdate!=null and product.productTdate!='' ">product_tdate = #{product.productTdate},</if>
+            <if test="product.hospitalId!=null and product.hospitalId!='' ">hospital_id = #{product.hospitalId},</if>
+            <if test="product.productHdate!=null and product.productHdate!='' ">product_hdate = #{product.productHdate},</if>
+            <if test="product.productStatus!=null and product.productStatus!='' ">product_status = #{product.productStatus}</if>
+        </set>
+        where product_id = #{product.productId}
+    </update>
+</mapper>

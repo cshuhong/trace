@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zut.trace.mapper.UserMapper">
+<sql id="userColumns">
+    select user_id
+,user_name
+,user_password
+,user_account
+,user_photo
+,company_id
+,user_identity
+,user_status
+</sql>
+
+    <insert id="addUser" useGeneratedKeys="true" keyProperty="userId">
+INSERT INTO t_user(user_name,user_password,user_account,user_photo,company_id,user_identity,user_status)
+VALUES (#{user.userName},#{user.userPassword},#{user.userAccount},#{user.userPhoto},#{user.companyId},#{user.userIdentity},#{user.userStatus})
+</insert>
+
+    <delete id="deleteUser">
+        DELETE FROM t_user WHERE user_id = #{userId}
+    </delete>
+
+    <select id="queryUser" resultType="cn.edu.zut.trace.entity.po.User">
+        <include refid="userColumns"/>
+        from t_user
+        <where>
+            <if test="user.userId!=null and user.userId!='' ">user_id = #{user.userId}</if>
+            <if test="user.userName!=null and user.userName!='' ">and user_name = #{user.userName}</if>
+            <if test="user.userPassword!=null and user.userPassword!='' ">and user_password = #{user.userPassword}</if>
+            <if test="user.userAccount!=null and user.userAccount!='' ">and user_account = #{user.userAccount}</if>
+            <if test="user.companyId!=null and user.companyId!='' ">and company_id = #{user.companyId}</if>
+            <if test="user.userIdentity!=null and user.userIdentity!='' ">and user_identity = #{user.userIdentity}</if>
+            <if test="user.userStatus!=null and user.userStatus!='' ">and user_status = #{user.userStatus}</if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultType="cn.edu.zut.trace.entity.po.User">
+        <include refid="userColumns"/>
+        from t_user
+    </select>
+
+    <update id="updateUser">
+        update t_user
+        <set>
+            <if test="user.userName!=null and user.userName!='' ">user_name = #{user.userName},</if>
+            <if test="user.userPassword!=null and user.userPassword!='' ">user_password = #{user.userPassword},</if>
+            <if test="user.userAccount!=null and user.userAccount!='' ">user_account = #{user.userAccount},</if>
+            <if test="user.companyId!=null and user.companyId!='' ">company_id = #{user.companyId},</if>
+            <if test="user.userIdentity!=null and user.userIdentity!='' ">user_identity = #{user.userIdentity},</if>
+            <if test="user.userStatus!=null and user.userStatus!='' ">user_status = #{user.userStatus}</if>
+        </set>
+        where user_id = #{user.userId}
+    </update>
+
+</mapper>

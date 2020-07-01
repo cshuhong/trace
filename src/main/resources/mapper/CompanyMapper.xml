@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.zut.trace.mapper.CompanyMapper">
+<sql id="companyColumns">
+    select company_id
+,company_name
+,company_location
+,company_phone
+,company_photo
+,company_status
+</sql>
+
+    <insert id="addCompany" useGeneratedKeys="true" keyProperty="companyId">
+INSERT INTO t_company(company_name,company_location,company_phone,company_photo,company_status)
+VALUES (#{company.companyName},#{company.companyLocation},#{company.companyPhone},#{company.companyPhoto},#{company.companyStatus})
+    </insert>
+
+    <delete id="deleteCompany">
+        DELETE FROM t_company WHERE company_id = #{companyId}
+    </delete>
+    <select id="queryCompany" resultType="cn.edu.zut.trace.entity.po.Company">
+        <include refid="companyColumns"/>
+        from t_company
+        <where>
+            <if test="company.companyId!=null and company.companyId!='' ">company_id = #{company.companyId}</if>
+            <if test="company.companyName!=null and company.companyName!='' ">and company_name = #{company.companyName}</if>
+            <if test="company.companyPhone!=null and company.companyPhone!='' ">and company_phone = #{company.companyPhone}</if>
+            <if test="company.companyStatus!=null and company.companyStatus!='' ">and company_status = #{company.companyStatus}</if>
+        </where>
+    </select>
+
+    <select id="queryAll" resultType="cn.edu.zut.trace.entity.po.Company">
+        <include refid="companyColumns"/>
+        from t_company
+    </select>
+
+    <update id="updateCompany">
+        update t_company
+        <set>
+            <if test="company.companyLocation!=null and company.companyLocation!='' ">company_location = #{company.companyLocation},</if>
+            <if test="company.companyPhone!=null and company.companyPhone!='' ">company_phone = #{company.companyPhone},</if>
+            <if test="company.companyStatus!=null and company.companyStatus!='' ">company_status = #{company.companyStatus}</if>
+        </set>
+        where company_id = #{company.companyId}
+    </update>
+</mapper>
