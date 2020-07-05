@@ -37,6 +37,12 @@ public class UserController {
         }
         if (StringUtils.isBlank(user.getCompanyId()))
             user.setCompanyId("0");
+        if ("6".equals(user.getUserIdentity())){
+            user.setUserStatus("0");
+        }
+        else{
+            user.setUserStatus("1");
+        }
         //判断数据库中是否已存在
         User u = new User();
         u.setUserAccount(user.getUserAccount());

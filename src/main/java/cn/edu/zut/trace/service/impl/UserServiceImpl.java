@@ -6,6 +6,7 @@ import cn.edu.zut.trace.mapper.UserMapper;
 import cn.edu.zut.trace.service.UserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,6 @@ public class UserServiceImpl implements UserService {
     public String register(User user) {
         String password = Md5Util.encode(user.getUserPassword());
         user.setUserPassword(password);
-        user.setUserStatus("1");
         userMapper.addUser(user);
         return user.getUserId();
     }
@@ -55,7 +55,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Integer updateUser(User user) {
-        user.setUserPassword(Md5Util.encode(user.getUserPassword()));
+        if (StringUtils.isNotBlank(user.getUserPassword())){
+            user.setUserPassword(Md5Util.encode(user.getUserPassword()));
+        }
         return userMapper.updateUser(user);
     }
 
