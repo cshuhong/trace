@@ -16,6 +16,8 @@ public interface UserMapper extends Mapper<User> {
 
     List<User> queryUser(@Param("user") User user);
 
+    List<User> queryCompanyUser(@Param("user") User user);
+
     Integer updateUser(@Param("user") User user);
 
     Integer deleteUser(@Param("userId") String userId);

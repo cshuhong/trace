@@ -17,6 +17,9 @@ public interface UserService {
 //    查询用户
     PageInfo<User> queryUser(User user, int pageNo, int pageSize);
 
+//    查询企业人员
+    PageInfo<User> queryCompanyUser(User user, int pageNo, int pageSize);
+
 //    更新用户信息
     Integer updateUser(User user);
 

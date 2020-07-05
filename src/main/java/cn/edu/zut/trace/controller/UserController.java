@@ -109,6 +109,20 @@ public class UserController {
         return new R(ResultCode.成功, pageInfo);
     }
 
+    @ApiOperation(value = "查询企业人员", response = R.class)
+    @GetMapping("/queryCompanyUser")
+    public R queryCompanyUser(@ApiParam(name = "用户实体类", required = true) User user,
+                       @ApiParam(name = "页数", required = true) @RequestParam(defaultValue = "1") int pageNo,
+                       @ApiParam(name = "页大小", required = true) @RequestParam(defaultValue = "10") int pageSize,
+                       HttpServletResponse response) {
+        PageInfo<User> pageInfo = userService.queryCompanyUser(user,pageNo,pageSize);
+        if (pageInfo == null) {
+            response.setStatus(500);
+            return new R(ResultCode.Http接口响应异常);
+        }
+        return new R(ResultCode.成功, pageInfo);
+    }
+
     @ApiOperation(value = "更新用户信息", response = R.class)
     @PostMapping("/update")
     public R updateUser(@ApiParam(name = "用户实体类", required = true) User user) {

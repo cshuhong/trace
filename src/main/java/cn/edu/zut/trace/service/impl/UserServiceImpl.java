@@ -54,6 +54,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public PageInfo<User> queryCompanyUser(User user, int pageNo, int pageSize) {
+        PageHelper.startPage(pageNo, pageSize);
+        List<User> list = userMapper.queryCompanyUser(user);
+        return new PageInfo<>(list);
+    }
+
+    @Override
     public Integer updateUser(User user) {
         if (StringUtils.isNotBlank(user.getUserPassword())){
             user.setUserPassword(Md5Util.encode(user.getUserPassword()));
