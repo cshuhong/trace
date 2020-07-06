@@ -41,20 +41,22 @@ VALUES (#{user.userName},#{user.userPassword},#{user.userAccount},#{user.userPho
     </select>
 
     <select id="queryCompanyUser" resultType="cn.edu.zut.trace.entity.po.User">
-        SELECT
-        t_user.user_status,
-        t_user.user_id,
-        t_user.user_name,
-        t_user.user_password,
-        t_user.user_account,
-        t_user.user_photo,
-        t_user.user_identity,
-        t_user.company_id
-        FROM
-        t_user
-        WHERE
-        t_user.company_id != 0
-        AND t_user.user_identity BETWEEN 2 AND 5
+SELECT
+	t_user.user_status,
+	t_user.user_id,
+	t_user.user_name,
+	t_user.user_password,
+	t_user.user_account,
+	t_user.user_photo,
+	t_user.user_identity,
+	t_user.company_id
+FROM
+	t_user
+WHERE
+	t_user.company_id != 0
+	AND t_user.user_identity BETWEEN 2
+	AND 5
+	AND t_user.user_status = 0
     </select>
 
     <update id="updateUser">
