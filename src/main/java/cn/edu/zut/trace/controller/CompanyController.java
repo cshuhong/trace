@@ -37,9 +37,9 @@ public class CompanyController {
         //判断数据库中是否已存在
         Company c = new Company();
         c.setCompanyName(company.getCompanyName());
-        PageInfo<Company> pageInfo = companyService.queryCompany(c,0,0);
+        PageInfo<Company> pageInfo = companyService.queryCompany(c,1,10);
         if(pageInfo.getList().size()>0){
-            return new R(ResultCode.已注册);
+            return new R(ResultCode.重复添加);
         }
         String id = companyService.register(company);
         //注册返回id

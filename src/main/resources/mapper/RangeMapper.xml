@@ -13,7 +13,6 @@ VALUES (#{range.rangeId},#{range.companyId},#{range.rangeStatus})
     <update id="updateRange">
         update t_range
         <set>
-            <if test="range.rangeId!=null and range.rangeId!='' ">range_id = #{range.rangeId},</if>
             <if test="range.companyId!=null and range.companyId!='' ">company_id = #{range.companyId},</if>
             <if test="range.rangeStatus!=null and range.rangeStatus!='' ">range_status = #{range.rangeStatus}</if>
         </set>

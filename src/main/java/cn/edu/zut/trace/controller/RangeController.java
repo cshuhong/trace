@@ -65,6 +65,13 @@ public class RangeController {
     @ApiOperation(value = "申请范围", response = R.class)
     @PostMapping("/add")
     public R addRange(@ApiParam(name = "范围实体类", required = true) Range range) {
+        //判断数据库中是否已存在
+        Range r = new Range();
+        r.setRangeId(range.getRangeId());
+        PageInfo<Range> pageInfo = rangeService.queryRange(r,1,10);
+        if(pageInfo.getList().size()>0){
+            return new R(ResultCode.重复添加);
+        }
         range.setRangeStatus("1");
         Integer res = rangeService.addRange(range);
         if (res > 0) {

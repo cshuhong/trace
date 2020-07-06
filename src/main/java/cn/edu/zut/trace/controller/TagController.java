@@ -65,6 +65,13 @@ public class TagController {
     @ApiOperation(value = "添加标签", response = R.class)
     @PostMapping("/add")
     public R addTag(@ApiParam(name = "标签", required = true) Tag tag) {
+        //判断数据库中是否已存在
+        Tag t = new Tag();
+        t.setTagId(tag.getTagId());
+        PageInfo<Tag> pageInfo = tagService.queryTag(t,1,10);
+        if(pageInfo.getList().size()>0){
+            return new R(ResultCode.重复添加);
+        }
         tag.setTagStatus("0");
         Integer res = tagService.addTag(tag);
         if (res > 0) {

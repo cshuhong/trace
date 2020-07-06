@@ -46,9 +46,9 @@ public class UserController {
         //判断数据库中是否已存在
         User u = new User();
         u.setUserAccount(user.getUserAccount());
-        PageInfo<User> pageInfo = userService.queryUser(u,0,0);
+        PageInfo<User> pageInfo = userService.queryUser(u,1,10);
         if(pageInfo.getList().size()>0){
-            return new R(ResultCode.已注册);
+            return new R(ResultCode.重复添加);
         }
         String id = userService.register(user);
         //注册返回id
