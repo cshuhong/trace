@@ -6,4 +6,9 @@
 INSERT INTO t_login(login_time,user_id,user_name,user_account,company_id,user_identity)
 VALUES (CURRENT_TIMESTAMP,#{login.userId},#{login.userName},#{login.userAccount},#{login.companyId},#{login.userIdentity})
     </insert>
+
+    <select id="queryAllLogin" resultType="cn.edu.zut.trace.entity.vo.LoginVo">
+        select *
+        from t_login
+    </select>
 </mapper>

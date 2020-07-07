@@ -3,6 +3,7 @@ package cn.edu.zut.trace.controller;
 import cn.edu.zut.trace.common.enums.ResultCode;
 import cn.edu.zut.trace.entity.po.Login;
 import cn.edu.zut.trace.entity.po.User;
+import cn.edu.zut.trace.entity.vo.LoginVo;
 import cn.edu.zut.trace.entity.vo.R;
 import cn.edu.zut.trace.service.LoginService;
 import cn.edu.zut.trace.service.UserService;
@@ -95,6 +96,19 @@ public class UserController {
         }
         response.setStatus(403);
         return new R(ResultCode.登录失败);
+    }
+
+    @ApiOperation(value = "查询所有登录统计", response = R.class)
+    @GetMapping("/queryAllLogin")
+    public R queryAllLogin(@ApiParam(name = "页数", required = true) @RequestParam(defaultValue = "1") int pageNo,
+                          @ApiParam(name = "页大小", required = true) @RequestParam(defaultValue = "10") int pageSize,
+                          HttpServletResponse response) {
+        PageInfo<LoginVo> pageInfo = loginService.queryAllLogin(pageNo,pageSize);
+        if (pageInfo == null) {
+            response.setStatus(500);
+            return new R(ResultCode.Http接口响应异常);
+        }
+        return new R(ResultCode.成功, pageInfo);
     }
 
     @ApiOperation(value = "查询所有用户", response = R.class)
