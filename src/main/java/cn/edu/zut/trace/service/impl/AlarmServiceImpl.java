@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class AlarmServiceImpl implements AlarmService {
-    AlarmMapper alarmMapper;
+    private AlarmMapper alarmMapper;
 
     @Autowired
     public AlarmServiceImpl(AlarmMapper alarmMapper) {

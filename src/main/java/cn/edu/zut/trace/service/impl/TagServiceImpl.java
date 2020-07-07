@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class TagServiceImpl implements TagService {
-    TagMapper tagMapper;
+    private TagMapper tagMapper;
 
     @Autowired
     public TagServiceImpl(TagMapper tagMapper) {

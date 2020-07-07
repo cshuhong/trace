@@ -1,8 +1,10 @@
 package cn.edu.zut.trace.controller;
 
 import cn.edu.zut.trace.common.enums.ResultCode;
+import cn.edu.zut.trace.entity.po.Login;
 import cn.edu.zut.trace.entity.po.User;
 import cn.edu.zut.trace.entity.vo.R;
+import cn.edu.zut.trace.service.LoginService;
 import cn.edu.zut.trace.service.UserService;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
@@ -21,11 +23,17 @@ import javax.servlet.http.HttpSession;
 @Api(tags = "用户接口")
 @CrossOrigin
 public class UserController {
-    UserService userService;
+    private UserService userService;
+    private LoginService loginService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setLoginService(LoginService loginService) {
+        this.loginService = loginService;
     }
 
     @ApiOperation(value = "用户注册", response = ResultCode.class)
@@ -73,6 +81,13 @@ public class UserController {
                     return new R(ResultCode.账户异常);
                 }
                 else{
+                    Login login = new Login();
+                    login.setUserId(user1.getUserId());
+                    login.setUserName(user1.getUserName());
+                    login.setUserAccount(user1.getUserAccount());
+                    login.setCompanyId(user1.getCompanyId());
+                    login.setUserIdentity(user1.getUserIdentity());
+                    Integer res = loginService.addLogin(login);
                     session.setAttribute("user",user1);
                     return new R(ResultCode.成功, user1);
                 }
