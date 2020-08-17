@@ -22,7 +22,7 @@ public class Product {
     @ApiModelProperty("产品介绍")
     private String productIntroduce;
     @ApiModelProperty("生产日期")
-    private Timestamp productDate;
+    private String productDate;
     @ApiModelProperty("生产批次")
     private String productBatch;
     @ApiModelProperty("保质期X月")
@@ -30,11 +30,11 @@ public class Product {
     @ApiModelProperty("物流公司id")
     private String transporterId;
     @ApiModelProperty("物流公司写入时间")
-    private Timestamp productTdate;
+    private String productTdate;
     @ApiModelProperty("接收商id")
     private String hospitalId;
     @ApiModelProperty("接收时间")
-    private Timestamp productHdate;
+    private String productHdate;
     @ApiModelProperty("产品状态")
     private String productStatus;
 
@@ -44,7 +44,7 @@ public class Product {
         this.productStatus = productStatus;
     }
 
-    public Product(String tagId, String transporterId, Timestamp productTdate, String hospitalId, Timestamp productHdate) {
+    public Product(String tagId, String transporterId, String productTdate, String hospitalId, String productHdate) {
         this.tagId = tagId;
         this.transporterId = transporterId;
         this.productTdate = productTdate;
@@ -52,7 +52,7 @@ public class Product {
         this.productHdate = productHdate;
     }
 
-    public Product(String productId, String tagId, String manufacturerId, String productName, String productIntroduce, Timestamp productDate, String productBatch, String productPeriod, String transporterId, Timestamp productTdate, String hospitalId, Timestamp productHdate, String productStatus) {
+    public Product(String productId, String tagId, String manufacturerId, String productName, String productIntroduce, String productDate, String productBatch, String productPeriod, String transporterId, String productTdate, String hospitalId, String productHdate, String productStatus) {
         this.productId = productId;
         this.tagId = tagId;
         this.manufacturerId = manufacturerId;
