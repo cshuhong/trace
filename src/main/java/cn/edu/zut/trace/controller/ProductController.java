@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,7 +64,7 @@ public class ProductController {
         List<ProductVo> list = pageInfo.getList();
         if (list.size()>0){
             for (ProductVo product : list){
-                if (product.getTagId() == null){
+                if (StringUtils.isBlank(product.getTagId())){
                     return new R(ResultCode.成功, product);
                 }
             }
